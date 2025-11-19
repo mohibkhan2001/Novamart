@@ -4,17 +4,17 @@ import {
   mensClothing,
   electronics,
   furniture,
-  watches,
+  gamingItem
 } from "../data/HeroImages";
 
 const Hero = () => {
   return (
-    <section className="w-full h-200 grid grid-cols-6 grid-rows-5 gap-0">
-      <div className="absolute inset-0 bg-black/50 pointer-events-none z-10"></div>
+    <section className="w-full h-screen grid grid-cols-6 grid-rows-5 gap-0 relative">
+      <div className="absolute inset-0 bg-black/60 pointer-events-none z-10  select-none"></div>
 
       {/* div1: grid-area 1 / 1 / 4 / 3 */}
       <img
-        src={womensClothing}
+        src={gamingItem}
         alt="Women's Clothing"
         className="object-cover w-full h-full col-start-1 col-end-3 row-start-1 row-end-4"
         draggable={false}
@@ -47,7 +47,7 @@ const Hero = () => {
       {/* div5: grid-area 1 / 5 / 6 / 7 */}
       {/* Assuming you have a 5th image, otherwise use one of the above or add a placeholder */}
       <img
-        src={watches} // Replace with your actual 5th image
+        src={womensClothing} // Replace with your actual 5th image
         alt="Additional Image"
         className="object-cover w-full h-full col-start-5 col-end-7 row-start-1 row-end-6"
         draggable={false}
