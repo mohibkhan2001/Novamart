@@ -4,23 +4,46 @@ import {
   mensClothing,
   electronics,
   furniture,
-  gamingItem
+  gamingItem,
 } from "../data/HeroImages";
+import { NavLink } from "react-router-dom";
 
 const Hero = () => {
   return (
     <section className="w-full h-screen grid grid-cols-6 grid-rows-5 gap-0 relative">
-      <div className="absolute inset-0 bg-black/60 pointer-events-none z-10  select-none"></div>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/60 pointer-events-none z-10 select-none"></div>
 
-      {/* div1: grid-area 1 / 1 / 4 / 3 */}
+      {/* Center Content */}
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 select-none">
+        <span className="text-emerald-300 text-sm tracking-widest uppercase">
+          Welcome to Our Store
+        </span>
+
+        <h1 className="mt-2 text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+          Discover Your Style
+        </h1>
+
+        <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-xl">
+          Shop the latest collections in fashion, electronics, furniture & more.
+        </p>
+
+        <NavLink
+          to="/shop"
+          className="mt-6 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
+        >
+          Shop Now
+        </NavLink>
+      </div>
+
+      {/* Grid Images */}
       <img
         src={gamingItem}
-        alt="Women's Clothing"
+        alt="Gaming Console"
         className="object-cover w-full h-full col-start-1 col-end-3 row-start-1 row-end-4"
         draggable={false}
       />
 
-      {/* div2: grid-area 4 / 1 / 6 / 3 */}
       <img
         src={mensClothing}
         alt="Men's Clothing"
@@ -28,7 +51,6 @@ const Hero = () => {
         draggable={false}
       />
 
-      {/* div3: grid-area 1 / 3 / 3 / 5 */}
       <img
         src={electronics}
         alt="Electronics"
@@ -36,7 +58,6 @@ const Hero = () => {
         draggable={false}
       />
 
-      {/* div4: grid-area 3 / 3 / 6 / 5 */}
       <img
         src={furniture}
         alt="Furniture"
@@ -44,11 +65,9 @@ const Hero = () => {
         draggable={false}
       />
 
-      {/* div5: grid-area 1 / 5 / 6 / 7 */}
-      {/* Assuming you have a 5th image, otherwise use one of the above or add a placeholder */}
       <img
-        src={womensClothing} // Replace with your actual 5th image
-        alt="Additional Image"
+        src={womensClothing}
+        alt="Women's Clothing"
         className="object-cover w-full h-full col-start-5 col-end-7 row-start-1 row-end-6"
         draggable={false}
       />

@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Home from "./pages/Home";
 import axios from "axios";
+import Navbar from "./components/Navbar";
+import { Outlet } from "react-router-dom";
+import AppRoutes from "./pages/AppRoutes";
 
 const App = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -34,7 +37,11 @@ const App = () => {
 
   return (
     <div>
-      <Home/>
+        <div>
+        <Navbar />
+        <Outlet/>
+      </div>
+      <AppRoutes/>
     </div>
   );
 };
