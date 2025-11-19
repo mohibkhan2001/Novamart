@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
+import CartSidebar from "./components/CartSidebar";
 import { Outlet } from "react-router-dom";
 
 const App = () => {
@@ -8,7 +9,12 @@ const App = () => {
   const [_products, setProducts] = useState([]);
   const [_loading, setLoading] = useState(false);
   const [_error, setError] = useState(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
+  const toggleCart = () => {
+    console.log("Cart clicked", isCartOpen);
+    setIsCartOpen(!isCartOpen);
+  };
   const getAllProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -35,7 +41,8 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar toggleCart={toggleCart} />
+      <CartSidebar isOpen={isCartOpen} toggleCart={toggleCart} />
       <Outlet />
     </div>
   );

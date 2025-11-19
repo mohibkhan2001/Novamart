@@ -7,20 +7,17 @@ import ElectronicItems from './ElectronicItems'
 import Furniture from './Furniture'
 import Shoes from './Shoes'
 
-
 const AppRoutes = () => {
   return (
-    <div>
-
-        <Routes>
-            <Route path='/' element={<App/>}/>
-             <Route index element={<Home />} />
-             <Route path='/clothes' element={<Clothes/>}/>
-             <Route path='/shoes' element={<Shoes/>}/>
-             <Route path='/electronics' element={<ElectronicItems/>}/>
-             <Route path='/furniture' element={<Furniture/>}/>
-        </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="clothes" element={<Clothes />} />
+        <Route path="shoes" element={<Shoes />} />
+        <Route path="electronics" element={<ElectronicItems />} />
+        <Route path="furniture" element={<Furniture />} />
+      </Route>
+    </Routes>
   )
 }
 
