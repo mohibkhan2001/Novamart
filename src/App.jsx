@@ -12,7 +12,6 @@ const App = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const toggleCart = () => {
-    console.log("Cart clicked", isCartOpen);
     setIsCartOpen(!isCartOpen);
   };
   const getAllProducts = useCallback(async () => {
@@ -22,7 +21,6 @@ const App = () => {
     try {
       const response = axios.get(API_URL);
       setProducts((await response).data);
-      console.log(response);
     } catch (error) {
       if (error) {
         setError("Failed to fetch products. Please try again.");
