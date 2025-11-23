@@ -32,10 +32,12 @@ const Home_Category = ({ SectionTitle, ids }) => {
 
   return (
     <div className="w-full select-none py-10 px-30 flex flex-col gap-14 bg-neutral-100 relative">
-      <button className="bg-emerald-950 px-4 py-2 rounded-full text-white absolute right-35 flex justify-center items-center gap-4 cursor-pointer hover:bg-emerald-900 transition-all">
-        <span>Shop now</span>
-        <FaArrowAltCircleRight />
-      </button>
+      {SectionTitle !== "Top Sellers" && (
+        <button className="bg-emerald-950 px-4 py-2 rounded-full text-white absolute right-8 flex justify-center items-center gap-4 cursor-pointer hover:bg-emerald-900 transition-all">
+          <span>Shop now</span>
+          <FaArrowAltCircleRight />
+        </button>
+      )}
       <div className="h-1/2 w-20 rounded-2xl bg-emerald-950 absolute -left-14"></div>
       <div className="h-1/2 w-20 rounded-2xl bg-emerald-950 absolute -right-14"></div>
       <h1 className="Heading text-5xl font-extrabold p-2 text-emerald-950  text-center">

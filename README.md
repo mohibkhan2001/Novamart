@@ -97,3 +97,13 @@ Contributions are welcome! Feel free to open issues or submit pull requests to h
 
 This project is licensed under the MIT License.
 
+| Homepage Section             | API Categories to Use                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Top Sellers**              | Mix of all high-rated items                                                                    |
+| **Men’s Collection**         | mens-shirts, mens-shoes, mens-watches, sunglasses, sports-accessories                          |
+| **Women’s Collection**       | womens-dresses, womens-bags, womens-jewellery, womens-shoes, womens-watches, beauty, skin-care |
+| **Trending Electronics**     | smartphones, tablets, laptops                                                                  |
+| **Accessories & Essentials** | mobile-accessories, sunglasses, womens-jewellery, sports-accessories                           |
+| **Home & Lifestyle**         | furniture, home-decoration, kitchen-accessories, groceries                                     |
+| **Beauty & Care**            | beauty, skin-care, fragrances                                                                  |
+| **Vehicles & Outdoor Gear**  | motorcycle, vehicle                                                                            |
