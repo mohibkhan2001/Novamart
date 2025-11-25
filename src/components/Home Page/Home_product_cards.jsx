@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable no-undef */
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
@@ -56,7 +57,7 @@ const Home_product_cards = ({ product = {}, index = 0, onClick  }) => {
 
   return (
     <motion.div
-      className="h-100 w-70 border border-gray-200 rounded-4xl shadow-lg px-6 py-4 relative bg-white  transition-all cursor-pointer"
+      className="h-100 w-70 border border-gray-200 rounded-4xl shadow-lg px-6 py-4 relative bg-white  transition-all "
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.25 }}

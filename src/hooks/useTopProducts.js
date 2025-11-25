@@ -65,7 +65,7 @@ export const useTopProducts = (ids = []) => {
     fetchProducts();
 
     return () => (mounted = false);
-  }, [cacheKey]); // re-run when ids change
+  }, [cacheKey, cacheTimeKey, ids]); // re-run when ids change
 
   return { products, loading, error };
 };

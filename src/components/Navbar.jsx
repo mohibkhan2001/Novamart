@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { LuShoppingCart } from "react-icons/lu";
+import NavbarMobile from "./Home Page/NavbarMobile";
 
 const Navbar = ({ toggleCart }) => {
   // styles
@@ -16,7 +17,13 @@ const Navbar = ({ toggleCart }) => {
     "text-white hover:-translate-y-0.5 hover:scale-105 hover:bg-white/5";
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-40 flex justify-center pointer-events-none select-none">
+    <>
+      {/* Mobile hamburger placed outside header so header can be hidden on mobile */}
+      <div className="fixed top-4 right-4 z-50 md:hidden pointer-events-auto">
+        <NavbarMobile toggleCart={toggleCart} />
+      </div>
+
+      <header className="hidden md:flex fixed top-4 left-0 right-0 z-40 justify-center pointer-events-none select-none">
       {/* centered container to limit width; remove mx-auto / max-w if you want full-bleed */}
       <div className="w-full max-w-8xl px-40">
         <div
@@ -26,7 +33,7 @@ const Navbar = ({ toggleCart }) => {
           <h1 className="text-lg font-bold text-white">NovaMart</h1>
 
           <nav>
-            <ul className="flex items-center gap-6 text-md text-center flex-nowrap">
+            <ul className="hidden md:flex items-center gap-6 text-md text-center flex-nowrap">
               <li>
                 <NavLink to="/" end className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">
@@ -38,30 +45,19 @@ const Navbar = ({ toggleCart }) => {
 
               <li>
                 <NavLink to="/clothes" className={getNavLinkClass}>
-                  <span className="relative whitespace-nowrap">
-                    Men's Collection
-                    <span
-                      className={`absolute left-0 -bottom-1 h-0.5 bg-emerald-300 transition-all duration-200 ${
-                        // simple visual, you can swap this with isActive-controlled width logic if you want
-                        "w-0"
-                      }`}
-                    />
-                  </span>
+                  <span className="relative whitespace-nowrap">Men's Collection</span>
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/shoes" className={getNavLinkClass}>
-                <span className="relative whitespace-nowrap">
-                  Women's Collection
-                </span>
-                  
+                  <span className="relative whitespace-nowrap">Women's Collection</span>
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/electronics" className={getNavLinkClass}>
-                  <span className="relative whitespace-nowra">Home & Lifestyle</span>
+                  <span className="relative whitespace-nowrap">Home & Lifestyle</span>
                 </NavLink>
               </li>
 
@@ -70,13 +66,15 @@ const Navbar = ({ toggleCart }) => {
                   <span className="relative whitespace-nowrap">Beauty & care</span>
                 </NavLink>
               </li>
+
               <li>
-                <NavLink to="/furniture" className={getNavLinkClass}>
+                <NavLink to="/electronics" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Electronics</span>
                 </NavLink>
               </li>
+
               <li>
-                <NavLink to="/furniture" className={getNavLinkClass}>
+                <NavLink to="/sports" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Sports</span>
                 </NavLink>
               </li>
@@ -97,6 +95,7 @@ const Navbar = ({ toggleCart }) => {
                   Contact
                 </NavLink>
               </li>
+
               <li>
                 <NavLink
                   onClick={toggleCart}
@@ -107,10 +106,13 @@ const Navbar = ({ toggleCart }) => {
                 </NavLink>
               </li>
             </ul>
+
+            
           </nav>
         </div>
       </div>
-    </header>
+      </header>
+    </>
   );
 };
 
