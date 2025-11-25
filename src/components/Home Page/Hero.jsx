@@ -123,7 +123,7 @@ const Hero = () => {
         <span className="text-emerald-300 text-sm tracking-widest uppercase">Welcome to Our Store</span>
 
         <h1 className="mt-2 text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
-          Discover Your <span className="text-emerald-950">Style</span>
+          Discover Your Style
         </h1>
 
         <p className="mt-4 text-lg md:text-xl text-gray-200 max-w-xl">
