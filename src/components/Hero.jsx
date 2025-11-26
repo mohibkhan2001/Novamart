@@ -47,8 +47,10 @@ export default function Hero() {
       className="w-full max-h-screen h-screen grid grid-cols-6 grid-rows-5 gap-0 relative overflow-hidden"
       style={{ boxSizing: "border-box" }}
     >
+      {/* dark overlay */}
       <div className="absolute inset-0 bg-black/60 pointer-events-none z-10 select-none" />
 
+      {/* center content */}
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 select-none">
         <span className="text-emerald-300 text-sm tracking-widest uppercase">
           Welcome to Our Store
@@ -64,22 +66,20 @@ export default function Hero() {
 
         <NavLink
           to="/shop"
-          className="mt-6 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer z-30"
+          className="mt-6 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 cursor-pointer z-30"
         >
           Shop Now
         </NavLink>
       </div>
 
-      {items.map((item) => (
+      {/* grid items (images) */}
+      {initialItems.map((item) => (
         <div
           key={item.id}
           className={`${item.placement} overflow-hidden z-0`}
-          layout
-          transition={motionTransition}
-          initial={false}
           style={{
             touchAction: "manipulation",
-            willChange: "transform, opacity",
+            willChange: "opacity",
             maxHeight: "100vh",
           }}
         >
@@ -88,15 +88,8 @@ export default function Hero() {
             alt={item.alt}
             draggable={false}
             className="object-cover w-full h-full block"
-            layout
-            whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
-            transition={{ ...motionTransition, duration: 5.5 }}
-            style={{
-              transformOrigin: "center center",
-              backfaceVisibility: "hidden",
-              willChange: "transform, opacity",
-            }}
             onLoad={(e) => {
+              // ensure visible once loaded (keeps your previous intent)
               e.currentTarget.style.display = "block";
             }}
           />

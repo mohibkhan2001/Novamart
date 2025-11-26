@@ -128,7 +128,7 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
 
           <button
             className={
-              "text-emerald-950 border-emerald-950 border-2 rounded-lg " +
+              "text-emerald-950 border-emerald-950 border-2 rounded-lg cursor-pointer" +
               "text-sm p-1 hover:shadow hover:scale-110 transition-all " +
               "md:text-2xl md:p-2"
             }

@@ -23,14 +23,13 @@ const Navbar = ({ toggleCart }) => {
         <NavbarMobile toggleCart={toggleCart} />
       </div>
 
-      <header className="hidden md:flex fixed top-4 left-0 right-0 z-40 justify-center pointer-events-none select-none">
-      {/* centered container to limit width; remove mx-auto / max-w if you want full-bleed */}
-      <div className="w-full max-w-8xl px-40">
+      <header className="hidden md:flex top-4 left-0 right-0 z-40 justify-center pointer-events-none select-none">
+      <div className="w-full ">
         <div
-          className="pointer-events-auto flex items-center justify-between gap-6 
-                     rounded-xl px-6 bg-neutral-800/20 backdrop-blur-md border border-white/20 shadow-lg"
+          className="w-full pointer-events-auto flex items-center justify-between gap-6 
+                      px-6 bg-emerald-950"
         >
-          <h1 className="text-lg font-bold text-white">NovaMart</h1>
+          <h1 className="text-2xl font-bold text-emerald-900">NovaMart</h1>
 
           <nav>
             <ul className="hidden md:flex items-center gap-6 text-md text-center flex-nowrap">
@@ -44,25 +43,25 @@ const Navbar = ({ toggleCart }) => {
               </li>
 
               <li>
-                <NavLink to="/clothes" className={getNavLinkClass}>
+                <NavLink to="/men's_collection" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Men's Collection</span>
                 </NavLink>
               </li>
 
               <li>
-                <NavLink to="/shoes" className={getNavLinkClass}>
+                <NavLink to="/women's_collection" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Women's Collection</span>
                 </NavLink>
               </li>
 
               <li>
-                <NavLink to="/electronics" className={getNavLinkClass}>
+                <NavLink to="/home_lifestyle" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Home & Lifestyle</span>
                 </NavLink>
               </li>
 
               <li>
-                <NavLink to="/furniture" className={getNavLinkClass}>
+                <NavLink to="/beauty_care" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Beauty & care</span>
                 </NavLink>
               </li>
@@ -76,6 +75,11 @@ const Navbar = ({ toggleCart }) => {
               <li>
                 <NavLink to="/sports" className={getNavLinkClass}>
                   <span className="relative whitespace-nowrap">Sports</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/products" className={getNavLinkClass}>
+                  <span className="relative whitespace-nowrap">Shop All</span>
                 </NavLink>
               </li>
 

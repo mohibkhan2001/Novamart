@@ -61,7 +61,6 @@ const Hero = () => {
         // smaller lerp factor -> smoother, less jumpy
         current[i] = lerp(current[i], target, 0.08);
         // use translate3d for GPU acceleration
-        el.style.transform = `translate3d(0, ${current[i].toFixed(2)}px, 0)`;
       }
     };
 
@@ -143,7 +142,7 @@ const Hero = () => {
         ref={(el) => (imageRefs.current[0] = el)}
         src={gamingItem}
         alt="Gaming Console"
-        className="object-cover w-full h-full col-start-1 col-end-3 row-start-1 row-end-4 will-change-transform"
+        className="object-cover w-full h-full col-start-1 col-end-3 row-start-1 row-end-4"
         draggable={false}
         decoding="async"
       />
