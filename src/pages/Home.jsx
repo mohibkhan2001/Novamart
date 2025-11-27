@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Hero from "../components/Home Page/Hero";
 import Home_Category from "../components/Home Page/Home_Category";
 import Footer from "../components/Home Page/Footer";
+import { logCacheStats } from "../utils/cacheManager";
 
 const Home = () => {
   const sections = [
@@ -14,13 +15,52 @@ const Home = () => {
     { title: "Sports", ids: [149, 153, 147, 140, 150] },
   ];
 
+  const [visibleSections, setVisibleSections] = useState(new Set([0])); // Load first section by default
+  const sectionRefs = useRef([]);
+
+  const handleIntersection = useCallback((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = parseInt(entry.target.dataset.sectionIndex);
+        setVisibleSections((prev) => new Set([...prev, index]));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, {
+      rootMargin: "200px", // Start loading 200px before section enters viewport
+      threshold: 0.01,
+    });
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    // Log cache stats on page load
+    setTimeout(() => logCacheStats(), 1000);
+
+    return () => observer.disconnect();
+  }, [handleIntersection]);
+
   return (
     <div className="overflow-x-hidden">
       <Hero />
 
       {sections.map((sec, i) => (
         <React.Fragment key={i}>
-          <Home_Category SectionTitle={sec.title} ids={sec.ids} />
+          <div
+            ref={(el) => (sectionRefs.current[i] = el)}
+            data-section-index={i}
+          >
+            {visibleSections.has(i) ? (
+              <Home_Category SectionTitle={sec.title} ids={sec.ids} />
+            ) : (
+              <div className="w-full select-none py-20 px-20 bg-gray-200 min-h-96 flex items-center justify-center">
+                <p className="text-gray-600">Loading section...</p>
+              </div>
+            )}
+          </div>
 
           {i !== sections.length - 1 && (
             <div className="w-full bg-emerald-900 h-2"></div>
