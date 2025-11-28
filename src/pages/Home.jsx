@@ -3,6 +3,7 @@ import Hero from "../components/Home Page/Hero";
 import Home_Category from "../components/Home Page/Home_Category";
 import Footer from "../components/Home Page/Footer";
 import { logCacheStats } from "../utils/cacheManager";
+import { fetchAllCategories } from "../api/products";
 
 const Home = () => {
   const sections = [
@@ -39,6 +40,9 @@ const Home = () => {
 
     // Log cache stats on page load
     setTimeout(() => logCacheStats(), 1000);
+
+    // Fetch categories on page load
+    fetchAllCategories();
 
     return () => observer.disconnect();
   }, [handleIntersection]);

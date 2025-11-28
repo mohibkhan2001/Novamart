@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import CartSidebar from "./components/CartSidebar";
 import { Outlet } from "react-router-dom";
@@ -41,7 +42,9 @@ const App = () => {
     <div>
       <Navbar toggleCart={toggleCart} />
       <CartSidebar isOpen={isCartOpen} toggleCart={toggleCart} />
-      <Outlet />
+      <AnimatePresence mode="wait">
+        <Outlet />
+      </AnimatePresence>
     </div>
   );
 };

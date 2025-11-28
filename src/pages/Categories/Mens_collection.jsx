@@ -1,15 +1,22 @@
 import React from "react";
+import CategoryCollection from "../../components/CategoryCollection";
 
 const Mens_collection = () => {
+  const mensCategoriesAllowed = [
+    "fragrances",
+    "mens-shirts",
+    "mens-shoes",
+    "mens-watches",
+    "sunglasses",
+  ];
+
   return (
-    <div>
-      <div className="flex w-full flex-col justify-center items-center">
-        <h1 className="text-5xl text-emerald-950 font-extrabold font-primary-extraBold">Men's Collection</h1>
-        <span class="text-gray-600 text-sm mt-2 block font-primary-medium font-extrabold">
-          Explore the latest styles and trends in men's fashion.
-        </span>
-      </div>
-    </div>
+    <CategoryCollection
+      title="Men's Collection"
+      description="Explore the latest styles and trends in men's fashion."
+      allowedCategories={mensCategoriesAllowed}
+      productsPerCategory={20}
+    />
   );
 };
 

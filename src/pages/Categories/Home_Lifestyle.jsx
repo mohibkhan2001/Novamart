@@ -1,9 +1,21 @@
-import React from 'react'
+import React from "react";
+import CategoryCollection from "../../components/CategoryCollection";
 
 const Home_Lifestyle = () => {
-  return (
-    <div>Home_Lifestyle</div>
-  )
-}
+  const homeLifestyleCategoriesAllowed = [
+    "furniture",
+    "home-decoration",
+    "kitchen-accessories",
+  ];
 
-export default Home_Lifestyle
+  return (
+    <CategoryCollection
+      title="Home & Lifestyle"
+      description="Transform your living space with our curated home and lifestyle collection."
+      allowedCategories={homeLifestyleCategoriesAllowed}
+      productsPerCategory={20}
+    />
+  );
+};
+
+export default Home_Lifestyle;

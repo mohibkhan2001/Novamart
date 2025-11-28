@@ -1,9 +1,22 @@
-import React from 'react'
+import React from "react";
+import CategoryCollection from "../../components/CategoryCollection";
 
 const Beauty_care = () => {
-  return (
-    <div>Beauty_care</div>
-  )
-}
+  const beautyCategoriesAllowed = [
+    "beauty",
+    "fragrances",
+    "skin-care",
+    "bath-body",
+  ];
 
-export default Beauty_care
+  return (
+    <CategoryCollection
+      title="Beauty & Care"
+      description="Discover premium beauty and personal care products for your skincare routine."
+      allowedCategories={beautyCategoriesAllowed}
+      productsPerCategory={20}
+    />
+  );
+};
+
+export default Beauty_care;

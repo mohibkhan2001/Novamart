@@ -1,9 +1,23 @@
-import React from 'react'
+import React from "react";
+import CategoryCollection from "../../components/CategoryCollection";
 
 const Electronics = () => {
-  return (
-    <div>Electronics</div>
-  )
-}
+  const electronicsCategoriesAllowed = [
+    "electronics",
+    "smartphones",
+    "laptops",
+    "tablets",
+    "audio",
+  ];
 
-export default Electronics
+  return (
+    <CategoryCollection
+      title="Electronics"
+      description="Shop the latest gadgets and electronic devices with cutting-edge technology."
+      allowedCategories={electronicsCategoriesAllowed}
+      productsPerCategory={20}
+    />
+  );
+};
+
+export default Electronics;

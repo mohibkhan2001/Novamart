@@ -1,6 +1,7 @@
 // src/api/products.js
 import axios from "axios";
 import { recordApiMetric } from "../utils/performanceMonitor";
+import { data } from "react-router-dom";
 
 const BASE = import.meta.env.VITE_API_URL || "https://dummyjson.com/products";
 const CACHE_DURATION = 1000 * 60 * 60 * 24; // 24 hours
@@ -93,10 +94,13 @@ function getProductFromCache(id) {
 function saveBatchIds(ids) {
   try {
     const storageKey = `${STORAGE_KEY_BATCH}${ids.join(",")}`;
-    localStorage.setItem(storageKey, JSON.stringify({
-      ids,
-      timestamp: Date.now(),
-    }));
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        ids,
+        timestamp: Date.now(),
+      })
+    );
   } catch (error) {
     console.warn("Failed to save batch IDs:", error);
   }
@@ -113,7 +117,7 @@ export async function fetchProductsByIds(ids = []) {
 
   try {
     const startTime = performance.now();
-    
+
     // Try to get from cache first
     const cachedProducts = ids
       .map((id) => getProductFromCache(id))
@@ -133,13 +137,15 @@ export async function fetchProductsByIds(ids = []) {
     const missingIds = ids.filter((id) => !cachedIds.includes(id));
 
     // Log what we're fetching
-    console.log(`📡 Fetching ${missingIds.length}/${ids.length} products from API (${cachedIds.length} from cache)`);
+    console.log(
+      `📡 Fetching ${missingIds.length}/${ids.length} products from API (${cachedIds.length} from cache)`
+    );
 
     // Fetch missing products from API
     let freshProducts = [];
     if (missingIds.length > 0) {
       const apiStartTime = performance.now();
-      
+
       const responses = await Promise.all(
         missingIds.map((id) =>
           apiClient.get(`/${id}`).catch((error) => {
@@ -150,7 +156,11 @@ export async function fetchProductsByIds(ids = []) {
       );
 
       const apiDuration = performance.now() - apiStartTime;
-      recordApiMetric(`fetchProductsByIds(${missingIds.length} items)`, apiDuration, missingIds.length > 0);
+      recordApiMetric(
+        `fetchProductsByIds(${missingIds.length} items)`,
+        apiDuration,
+        missingIds.length > 0
+      );
 
       freshProducts = responses
         .filter((res) => res !== null)
@@ -203,7 +213,9 @@ export function clearProductCache() {
 export function getCacheStats() {
   try {
     const keys = Object.keys(localStorage);
-    const productKeys = keys.filter((key) => key.startsWith(STORAGE_KEY_PREFIX));
+    const productKeys = keys.filter((key) =>
+      key.startsWith(STORAGE_KEY_PREFIX)
+    );
     const batchKeys = keys.filter((key) => key.startsWith(STORAGE_KEY_BATCH));
 
     let totalSize = 0;
@@ -220,5 +232,228 @@ export function getCacheStats() {
   } catch (error) {
     console.warn("Failed to get cache stats:", error);
     return null;
+  }
+}
+// =======================
+// Fetch All Categories
+// =======================
+
+const STORAGE_KEY_CATEGORIES = "novaMart_categories";
+const CATEGORIES_CACHE_DURATION = 1000 * 60 * 60 * 24 * 7; // 7 days
+
+/**
+ * Save categories to localStorage
+ * @param {Array} categories - Array of category names
+ */
+function saveCategoriesToCache(categories) {
+  try {
+    const cacheData = {
+      categories,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(cacheData));
+    console.log(`✅ Saved ${categories.length} categories to cache`);
+  } catch (error) {
+    console.warn("Failed to save categories to cache:", error);
+  }
+}
+
+/**
+ * Get categories from localStorage
+ * @returns {Array|null} Cached categories or null
+ */
+function getCategoriesFromCache() {
+  try {
+    const cached = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+    if (!cached) return null;
+
+    const cacheData = JSON.parse(cached);
+    const isExpired = Date.now() - cacheData.timestamp > CATEGORIES_CACHE_DURATION;
+
+    if (isExpired) {
+      localStorage.removeItem(STORAGE_KEY_CATEGORIES);
+      return null;
+    }
+
+    return cacheData.categories;
+  } catch (error) {
+    console.warn("Failed to retrieve categories from cache:", error);
+    return null;
+  }
+}
+
+/**
+ * Fetch products by category with caching
+ * @param {string} category - Category name (e.g., 'mens-shirts')
+ * @param {number} limit - Number of products to fetch (default 30)
+ * @returns {Promise<Array>} Array of products
+ */
+export async function fetchProductsByCategory(category, limit = 30) {
+  if (!category) return [];
+
+  try {
+    const cacheKey = `novaMart_category_${category}`;
+    
+    // Try to get from cache first
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { data: cachedData, timestamp } = JSON.parse(cached);
+        const age = Date.now() - timestamp;
+        
+        // Check if cache is still valid (24 hours)
+        if (age < CACHE_DURATION) {
+          console.log(`✅ Cache HIT: ${cachedData.length} products from category "${category}"`);
+          return cachedData;
+        }
+      }
+    } catch (e) {
+      // Cache read failed, continue with API call
+    }
+
+    console.log(`📡 Fetching products from category "${category}" (limit: ${limit})...`);
+    const apiStartTime = performance.now();
+
+    const res = await apiClient.get(`/category/${category}`, {
+      params: { limit }
+    });
+
+    const products = res.data?.products || [];
+    const apiDuration = performance.now() - apiStartTime;
+    recordApiMetric(`fetchProductsByCategory[${category}]`, apiDuration, true);
+
+    // Save each product to cache for later individual retrieval
+    products.forEach((product) => {
+      saveProductToCache(product);
+    });
+
+    // Also save the category batch to cache
+    try {
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          data: products,
+          timestamp: Date.now(),
+        })
+      );
+    } catch (e) {
+      console.warn("Failed to cache category products:", e);
+    }
+
+    console.log(`📦 Fetched ${products.length} products from category "${category}" (${apiDuration.toFixed(0)}ms)`);
+    return products;
+  } catch (error) {
+    console.error(`Failed to fetch products from category "${category}":`, error);
+    return [];
+  }
+}
+
+/**
+ * Fetch products from multiple categories and combine them
+ * @param {Array} categories - Array of category names (e.g., ['mens-shirts', 'mens-shoes'])
+ * @param {number} limit - Number of products to fetch per category (default 20)
+ * @returns {Promise<Array>} Combined array of products from all categories
+ */
+export async function fetchProductsByCategories(categories = [], limit = 20) {
+  if (!categories || categories.length === 0) return [];
+
+  try {
+    const cacheKey = `novaMart_categories_batch_${categories.sort().join(",")}`;
+    
+    // Try to get from cache first
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { data: cachedData, timestamp } = JSON.parse(cached);
+        const age = Date.now() - timestamp;
+        
+        // Check if cache is still valid (24 hours)
+        if (age < CACHE_DURATION) {
+          console.log(`✅ Cache HIT: ${cachedData.length} products from ${categories.length} categories`);
+          return cachedData;
+        }
+      }
+    } catch (e) {
+      // Cache read failed, continue with API call
+    }
+
+    console.log(`📡 Fetching products from ${categories.length} categories (limit: ${limit} each)...`);
+    const apiStartTime = performance.now();
+
+    // Fetch products from all categories in parallel
+    const allProducts = await Promise.all(
+      categories.map((category) => fetchProductsByCategory(category, limit))
+    );
+
+    // Flatten and combine results (dedup by product ID)
+    const productMap = new Map();
+    allProducts.flat().forEach((product) => {
+      if (product && product.id && !productMap.has(product.id)) {
+        productMap.set(product.id, product);
+      }
+    });
+
+    const combinedProducts = Array.from(productMap.values());
+    const apiDuration = performance.now() - apiStartTime;
+    recordApiMetric(`fetchProductsByCategories[${categories.length}]`, apiDuration, true);
+
+    // Save combined batch to cache
+    try {
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          data: combinedProducts,
+          timestamp: Date.now(),
+        })
+      );
+    } catch (e) {
+      console.warn("Failed to cache categories batch:", e);
+    }
+
+    console.log(`📦 Fetched ${combinedProducts.length} unique products from ${categories.length} categories (${apiDuration.toFixed(0)}ms)`);
+    return combinedProducts;
+  } catch (error) {
+    console.error("Failed to fetch products from multiple categories:", error);
+    return [];
+  }
+}
+
+/**
+ * Fetch all categories with caching
+ * Returns immediately if categories are cached
+ * @returns {Promise<Array>} Array of category names
+ */
+export async function fetchAllCategories() {
+  try {
+    // Try to get from cache first
+    const cachedCategories = getCategoriesFromCache();
+    if (cachedCategories && cachedCategories.length > 0) {
+      console.log(`✅ Cache HIT: ${cachedCategories.length} categories from cache`);
+      console.table(cachedCategories);
+      return cachedCategories;
+    }
+
+    console.log("📡 Fetching categories from API...");
+    const apiStartTime = performance.now();
+
+    const res = await apiClient.get("/categories"); // GET https://dummyjson.com/products/categories
+    const categories = res.data || [];
+    console.log(res)
+
+    const apiDuration = performance.now() - apiStartTime;
+    recordApiMetric("fetchAllCategories", apiDuration, true);
+
+    if (categories.length > 0) {
+      // Save to cache
+      saveCategoriesToCache(categories);
+      
+      console.log(`📦 Fetched ${categories.length} categories (${apiDuration.toFixed(0)}ms)`);
+      console.table(categories);
+    }
+
+    return categories;
+  } catch (error) {
+    console.error("Failed to fetch categories:", error);
+    return [];
   }
 }
