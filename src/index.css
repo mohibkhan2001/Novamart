@@ -1,5 +1,26 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: raleway-extrabold;
+  src: url(../public/static/Raleway-ExtraBold.ttf);
+}
+@font-face {
+  font-family: raleway-bold;
+  src: url(../public/static/Raleway-Bold.ttf);
+}
+@font-face {
+  font-family: raleway-medium;
+  src: url(../public/static/Raleway-Bold.ttf);
+}
+@font-face {
+  font-family: raleway-light;
+  src: url(../public/static/Raleway-Light.ttf);
+}
+@font-face {
+  font-family: raleway-extraLight;
+  src: url(../public/static/Raleway-ExtraLight.ttf);
+}
+
 html,body{
     scroll-behavior: smooth;
 }
@@ -12,3 +33,11 @@ html,body{
   display: none; /* Chrome/Safari/Webkit */
 }
 
+
+@theme{
+  --font-primary-extraBold: raleway-extrabold;
+  --font-primary-bold: raleway-bold;
+  --font-primary-medium: raleway-medium;
+  --font-primary-medium: raleway-light;
+  --font-primary-medium: raleway-extraLight;
+}
