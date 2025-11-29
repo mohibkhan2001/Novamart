@@ -8,6 +8,12 @@ import { CgShoppingCart } from "react-icons/cg";
 const placeholderImg = "https://via.placeholder.com/400x300?text=No+Image";
 
 const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
+  const addToCart = () => {
+    (e) => {
+      e.stopPropagation();
+      console.log("Add to cart clicked for", product.id);
+    };
+  };
   const {
     title = "Product",
     price = 0,
@@ -20,10 +26,11 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
   const optimizeImageUrl = (url) => {
     if (!url) return placeholderImg;
     // Remove existing query params and add compression
-    return url.replace(/\?.*$/, '') + '?w=300&q=75&auto=format';
+    return url.replace(/\?.*$/, "") + "?w=300&q=75&auto=format";
   };
 
-  const imageSrc = images && images.length ? optimizeImageUrl(images[0]) : placeholderImg;
+  const imageSrc =
+    images && images.length ? optimizeImageUrl(images[0]) : placeholderImg;
 
   const getStars = (ratingValue) => {
     const cleanRating = Number(Number(ratingValue || 0).toFixed(1));
@@ -34,17 +41,26 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
 
     for (let i = 0; i < full; i++) {
       stars.push(
-        <FaStar key={`full-${i}`} className="text-yellow-400 w-3 h-3 md:w-4 md:h-4" />
+        <FaStar
+          key={`full-${i}`}
+          className="text-yellow-400 w-3 h-3 md:w-4 md:h-4"
+        />
       );
     }
     if (half && full < 5) {
       stars.push(
-        <FaStarHalfAlt key="half" className="text-yellow-400 w-3 h-3 md:w-4 md:h-4" />
+        <FaStarHalfAlt
+          key="half"
+          className="text-yellow-400 w-3 h-3 md:w-4 md:h-4"
+        />
       );
     }
     for (let i = 0; i < empty; i++) {
       stars.push(
-        <FaRegStar key={`empty-${i}`} className="text-yellow-400 w-3 h-3 md:w-4 md:h-4" />
+        <FaRegStar
+          key={`empty-${i}`}
+          className="text-yellow-400 w-3 h-3 md:w-4 md:h-4"
+        />
       );
     }
     return stars;
@@ -144,9 +160,8 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
               "md:text-2xl md:p-2"
             }
             title="Add to cart"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Add to cart clicked for", product.id);
+            onClick={()=>{
+              addToCart();
             }}
             aria-label={`Add ${title} to cart`}
           >

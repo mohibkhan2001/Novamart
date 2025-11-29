@@ -43,7 +43,7 @@ const NavbarMobile = ({ toggleCart }) => {
       <button
         onClick={handleToggle}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="p-2 text-2xl text-white pointer-events-auto"
+        className="p-2 text-2xl text-gray-700 pointer-events-auto"
       >
         {open ? <RxCross2 /> : <RxHamburgerMenu />}
       </button>
@@ -87,22 +87,22 @@ const NavbarMobile = ({ toggleCart }) => {
                 </MobileLink>
               </li>
               <li>
-                <MobileLink to="/clothes" onClick={close}>
+                <MobileLink to="/men's_collection" onClick={close}>
                   Men's Collection
                 </MobileLink>
               </li>
               <li>
-                <MobileLink to="/shoes" onClick={close}>
+                <MobileLink to="/women's_collection" onClick={close}>
                   Women's Collection
                 </MobileLink>
               </li>
               <li>
-                <MobileLink to="/electronics" onClick={close}>
+                <MobileLink to="/home_lifestyle" onClick={close}>
                   Home & Lifestyle
                 </MobileLink>
               </li>
               <li>
-                <MobileLink to="/furniture" onClick={close}>
+                <MobileLink to="/beauty_care" onClick={close}>
                   Beauty & Care
                 </MobileLink>
               </li>
