@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useProducts } from "../hooks/useProducts";
 import Home_product_cards from "../components/Home Page/Home_product_cards";
+import { useNavigate } from "react-router-dom"; // add this import
 
 const ProductsPage = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   // optional: wire category selection to hook
   const { products, total, loading, error, limit, skip, next, prev } =
@@ -121,7 +123,8 @@ const ProductsPage = () => {
               <Home_product_cards
                 product={product}
                 index={idx}
-                onClick={(prod) => console.log("Clicked product:", prod.id)}
+                onClick={(product) => navigate(`/product/${product.id}`)}
+                // navigate on click
               />
             </motion.div>
           ))}

@@ -4,16 +4,19 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
+import { useCart } from "../../context/CartContext";
 
 const placeholderImg = "https://via.placeholder.com/400x300?text=No+Image";
 
 const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
-  const addToCart = () => {
-    (e) => {
-      e.stopPropagation();
-      console.log("Add to cart clicked for", product.id);
-    };
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Prevent card click
+    addToCart(product); // Add product globally
+    console.log("Added:", product.title);
   };
+
   const {
     title = "Product",
     price = 0,
@@ -74,7 +77,7 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
       // GPU hint + will-change to avoid compositor jank
       className={
         "w-full max-w-[16rem] p-4 rounded-2xl " +
-        "border border-gray-200 bg-white shadow-lg cursor-pointer transition-all relative " +
+        "border border-gray-200 bg-white shadow-lg cursor-pointer transition-all relative hover:scale-105 transition-all " +
         "md:w-70 md:h-100 md:px-6 md:py-4 md:rounded-4xl transform-gpu will-change-transform"
       }
       // only animate transform + opacity (cheap on compositor)
@@ -87,7 +90,8 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
         ease: "easeOut",
         delay: Math.min(index * 0.04, 0.12),
       }}
-      onClick={() => onClick && onClick(product)}
+     onClick={() => onClick && onClick(product)}
+
       role="button"
       tabIndex={0}
       onKeyPress={(e) => {
@@ -160,9 +164,7 @@ const Home_product_cards = ({ product = {}, index = 0, onClick }) => {
               "md:text-2xl md:p-2"
             }
             title="Add to cart"
-            onClick={()=>{
-              addToCart();
-            }}
+            onClick={handleAddToCart}
             aria-label={`Add ${title} to cart`}
           >
             <CgShoppingCart />

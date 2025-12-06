@@ -9,6 +9,7 @@ import Beauty_care from "./Categories/Beauty_care";
 import Electronics from "./Categories/Electronics";
 import Sports from "./Categories/Sports";
 import ProductsPage from "./ProductPage";
+import ProductDetailsPage from "./ProductDetailsPage"; // Adjust path
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,8 @@ const AppRoutes = () => {
         <Route path="electronics" element={<Electronics />} />
         <Route path="sports" element={<Sports />} />
         <Route path="/products" element={<ProductsPage />} />
+        {/* Add this: */}
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
       </Route>
     </Routes>
   );

@@ -130,7 +130,7 @@ const Hero = () => {
         </p>
 
         <NavLink
-          to="/shop"
+          to="/products"
           className="mt-6 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 hover:scale-105 cursor-pointer"
         >
           Shop Now

@@ -2,14 +2,9 @@ import React from "react";
 import Home_product_cards from "./Home_product_cards";
 import { useTopProducts } from "../../hooks/useTopProducts";
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 const Home_Category = ({ SectionTitle, ids }) => {
-  const handleProductClick = (id) => {
-    console.log("Clicked product ID:", id);
-    // You can navigate or open modal here
-  };
-
-  // pass ids through to the hook so each Home_Category can fetch a different set
   const { products = [], loading, error } = useTopProducts(ids);
 
   if (loading) {
@@ -31,7 +26,7 @@ const Home_Category = ({ SectionTitle, ids }) => {
   }
 
   return (
-    <div className="w-full select-none py-20 px-20 flex flex-col gap-14 bg-red-100 relative">
+    <div className="w-full select-none py-20 px-20 flex flex-col gap-14 bg-white relative">
       {SectionTitle !== "Top Sellers" && (
         <button className="bg-emerald-950 px-4 py-2 rounded-full text-white absolute right-8 flex justify-center items-center gap-4 cursor-pointer hover:bg-emerald-900 transition-all">
           <span>Shop now</span>
@@ -39,18 +34,19 @@ const Home_Category = ({ SectionTitle, ids }) => {
         </button>
       )}
 
-      <h1 className="Heading text-5xl font-extrabold p-2 text-emerald-950  text-center">
+      <h1 className="Heading text-5xl font-extrabold p-2 text-emerald-950 text-center">
         {SectionTitle}
       </h1>
 
       <div className="flex gap-4 justify-around items-center flex-wrap">
         {products.map((product, idx) => (
-          <Home_product_cards
+          <NavLink
             key={product.id ?? idx}
-            product={product}
-            index={idx}
-            onClick={() => handleProductClick(product.id)}
-          />
+            to={`/product/${product.id}`}
+            className="block"
+          >
+            <Home_product_cards product={product} index={idx} />
+          </NavLink>
         ))}
       </div>
     </div>

@@ -2,6 +2,8 @@ import React from "react";
 import CategoryCollection from "../../components/CategoryCollection";
 
 const Beauty_care = () => {
+
+  
   const beautyCategoriesAllowed = [
     "beauty",
     "fragrances",
